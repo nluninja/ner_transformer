@@ -6,5 +6,6 @@ __pycache__/
 *.pyc
 
 # temp folder
-run/
+runs/
 output/
+data/wiki-org/cached*
