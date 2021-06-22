@@ -9,3 +9,5 @@ __pycache__/
 runs/
 output/
 data/wiki-org/cached*
+**/cached_*
+output*/
