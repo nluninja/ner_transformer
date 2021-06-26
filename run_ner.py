@@ -19,21 +19,28 @@ from tqdm import tqdm, trange
 from utils_ner import convert_examples_to_features, get_labels, read_examples_from_file
 
 from transformers import AdamW, get_linear_schedule_with_warmup #WarmupLinearSchedule
-from transformers import WEIGHTS_NAME, BertConfig, BertForTokenClassification, BertTokenizer
+from transformers import WEIGHTS_NAME
+from transformers import BertConfig, BertForTokenClassification, BertTokenizer
+from transformers import RobertaConfig, RobertaForTokenClassification, RobertaTokenizer
+from transformers import DistilBertConfig, TFDistilBertForTokenClassification, DistilBertTokenizer
+from transformers import XLNetConfig, XLNetForTokenClassification, XLNetTokenizer
 from transformers import BERT_PRETRAINED_CONFIG_ARCHIVE_MAP
 from transformers import ROBERTA_PRETRAINED_CONFIG_ARCHIVE_MAP
 from transformers import DISTILBERT_PRETRAINED_CONFIG_ARCHIVE_MAP
+from transformers import XLNET_PRETRAINED_CONFIG_ARCHIVE_MAP
 
 logger = logging.getLogger(__name__)
 
-ALL_MODELS = sum(
-    (tuple(BERT_PRETRAINED_CONFIG_ARCHIVE_MAP.keys()) for conf in (BertConfig, )),
-    #(tuple(ROBERTA_PRETRAINED_CONFIG_ARCHIVE_MAP.keys()) for conf in (BertConfig, )),
-    #(tuple(DISTILBERT_PRETRAINED_CONFIG_ARCHIVE_MAP.keys()) for conf in (BertConfig, )),
-    ())
+ALL_MODELS = [k for k in BERT_PRETRAINED_CONFIG_ARCHIVE_MAP.keys()] \
+            + [k for k in ROBERTA_PRETRAINED_CONFIG_ARCHIVE_MAP.keys()] \
+            + [k for k in DISTILBERT_PRETRAINED_CONFIG_ARCHIVE_MAP.keys()] \
+            + [k for k in XLNET_PRETRAINED_CONFIG_ARCHIVE_MAP.keys()]
 
 MODEL_CLASSES = {
     "bert": (BertConfig, BertForTokenClassification, BertTokenizer),
+    "roberta": (RobertaConfig, RobertaForTokenClassification, RobertaTokenizer),
+    "distilbert": (DistilBertConfig, TFDistilBertForTokenClassification, DistilBertTokenizer),
+    "xlnet": (XLNetConfig, XLNetForTokenClassification, XLNetTokenizer)
 }
 
 
@@ -114,7 +121,7 @@ def train(args, train_dataset, model, tokenizer, labels, pad_token_label_id):
                       # XLM and RoBERTa don"t use segment_ids
                       "labels": batch[3]}
             outputs = model(**inputs)
-            loss = outputs[0]  # model outputs are always tuple in pytorch-transformers (see doc)
+            loss = outputs['loss'] if 'loss' in outputs else outputs[0]  # model outputs are always tuple in pytorch-transformers (see doc)
 
             if args.n_gpu > 1:
                 loss = loss.mean()  # mean() to average on multi-gpu parallel training
