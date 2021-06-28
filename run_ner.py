@@ -22,7 +22,7 @@ from transformers import AdamW, get_linear_schedule_with_warmup #WarmupLinearSch
 from transformers import WEIGHTS_NAME
 from transformers import BertConfig, BertForTokenClassification, BertTokenizer
 from transformers import RobertaConfig, RobertaForTokenClassification, RobertaTokenizer
-from transformers import DistilBertConfig, TFDistilBertForTokenClassification, DistilBertTokenizer
+from transformers import DistilBertConfig, DistilBertForTokenClassification, DistilBertTokenizer
 from transformers import XLNetConfig, XLNetForTokenClassification, XLNetTokenizer
 from transformers import BERT_PRETRAINED_CONFIG_ARCHIVE_MAP
 from transformers import ROBERTA_PRETRAINED_CONFIG_ARCHIVE_MAP
@@ -39,7 +39,7 @@ ALL_MODELS = [k for k in BERT_PRETRAINED_CONFIG_ARCHIVE_MAP.keys()] \
 MODEL_CLASSES = {
     "bert": (BertConfig, BertForTokenClassification, BertTokenizer),
     "roberta": (RobertaConfig, RobertaForTokenClassification, RobertaTokenizer),
-    "distilbert": (DistilBertConfig, TFDistilBertForTokenClassification, DistilBertTokenizer),
+    "distilbert": (DistilBertConfig, DistilBertForTokenClassification, DistilBertTokenizer),
     "xlnet": (XLNetConfig, XLNetForTokenClassification, XLNetTokenizer)
 }
 
