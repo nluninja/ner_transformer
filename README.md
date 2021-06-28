@@ -130,9 +130,10 @@
 |precision = 0.9821263172773973
 |recall = 0.9822724719205628
 
-|6. distilroberta-base
-|---
+6. distilroberta-base
+
 |./output.wiki-org.distilroberta-base/test_results.txt
+|---
 |LOC-f1 = 0.0
 |LOC-precision = 0.0
 |LOC-recall = 0.0
