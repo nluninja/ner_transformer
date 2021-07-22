@@ -1,4 +1,6 @@
-# Applying HuffingFace to a NER use case
+# NER study for multi word company name extraction
+Named entity extraction is a common task for available NLP engines, such as SpaCy, AllenNLP or equivalent solutions based on a Language Model algorithm such BERT or GPT-2
+
 
 
 ## Requirements
